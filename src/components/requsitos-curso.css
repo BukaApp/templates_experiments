@@ -1,0 +1,110 @@
+:root {
+    --border-radius-maskgroup: 17px;
+    --White: #f4f4f4;
+    --subcontainer-maskgroup: 190px;
+    --primary: #4784FE;
+    --black: #333;
+    --paddingAndmargin: 2.8rem;
+    --border-radius: 7px;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+#root {
+    /* max-width: 1280px; */
+    /* padding: 2rem; */
+    width: 100%;
+    min-height: 100vh;
+    /* background-color: red; */
+}
+
+/* Inline #3 | http://localhost:5173/ */
+
+.container-requisitoscurso {
+    width: clamp(650px, 82%, 850px);
+    /* background-color: yellow; */
+    height: 608px;
+    gap: 0;
+}
+
+.container-literal-painel-requisitoscurso {
+    background-color: var(--primary);
+    height: 100%;
+    width: 320px;
+}
+
+.container-logo-requisitoscurso {
+    height: 65px;
+    background-color: blue;
+}
+
+.container-image-requisitoscurso {
+    position: relative;
+    /* background-color: blueviolet; */
+    height: calc(100% - 65px);
+}
+
+/* Inline #1 | http://localhost:5173/ */
+
+.subcontainer-maskgroup {
+    width: var(--subcontainer-maskgroup);
+    height: var(--subcontainer-maskgroup);
+    border-radius: var(--border-radius-maskgroup);
+    position: absolute;
+}
+
+.image-maskgroup-requistoscurso {
+    border-radius: var(--border-radius-maskgroup);
+    position: absolute;
+}
+
+.subcontainer-maskgroup::before,
+.image-maskgroup-requistoscurso {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius-maskgroup);
+}
+
+.subcontainer-maskgroup::before {
+    content: "";
+    position: absolute;
+    background-color: var(--White);
+    left: 20px;
+    top: 27px;
+}
+
+.container-form-payment {
+    background-color: var(--White);
+    width: calc(100% - 320px);
+    height: 100%;
+}
+
+.btn-progress {
+    flex: 1 1 200px;
+    height: 45px;
+    border-radius: var(--border-radius) !important;
+    text-transform: capitalize !important;
+}
+
+.btn-progress:first-child,
+.btn-progress:first-child:disabled {
+    background-color: rgba(128, 181, 243, 0.2);
+    border: 2px solid var(--primary);
+    color: var(--primary)
+}
+
+.btn-progress:last-child,
+.btn-progress:last-child:hover {
+    background-color: var(--primary);
+    color: var(--White);
+}
+
+.svgIconLogo {
+    fill: red;
+}
