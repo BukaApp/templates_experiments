@@ -5,7 +5,7 @@
   --primary: #4784fe;
   --black: #333;
   --paddingAndmargin: 2.8rem;
-  --border-radius: 10px;
+  --border-radius: 8px;
   --background-low: rgba(128, 181, 243, 0.2);
 }
 
@@ -32,7 +32,7 @@ body {
 /* Inline #3 | http://localhost:5173/ */
 
 .container-requisitoscurso {
-  width: clamp(650px, 82%, 850px);
+  width: clamp(320px, 82%, 850px);
   /* background-color: yellow; */
   height: 608px;
   gap: 0;
@@ -142,4 +142,22 @@ body {
 }
 .MuiSelect-select {
   text-align: left;
+}
+@media (width <= 820px) {
+  .container-literal-painel-requisitoscurso {
+    display: none;
+  }
+  .container-form-payment {
+    width: 100%;
+    border-radius: var(--border-radius);
+  }
+  .css-o4o8x3-MuiStepper-root {
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+  }
+}
+
+/*  Second component */
+.input-date {
+  flex: 1 1 200px;
 }
