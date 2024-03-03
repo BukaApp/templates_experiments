@@ -14,6 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { v4 as uuid } from "uuid";
 
 const steps = [
     'Pagamento',
@@ -22,6 +23,8 @@ const steps = [
 ];
 
 const RequisitosCurso = () => {
+    const paymentTypeList = ['A ordem', 'corrente', 'global'];
+    const quantiaAPagar = ['15000', '30000', '25000']
     const valorMinimo = 15000;
     const gap = 1.5;
     const padding = '2rem';
@@ -107,7 +110,7 @@ const RequisitosCurso = () => {
         <div className="container-requisitoscurso flex">
             <div className="container-literal-painel-requisitoscurso">
                 <div className="container-logo-requisitoscurso flex">
-                    <LogoMaiorWhiteComponent className="svgIconLogo" />
+                    <LogoMaiorWhiteComponent className="svgIconLogo" size={80} />
                 </div>
                 <div className="container-image-requisitoscurso flex">
                     <div className="subcontainer-maskgroup flex">
@@ -133,7 +136,7 @@ const RequisitosCurso = () => {
                             }
                             return (
                                 <Step key={label} {...stepProps}>
-                                    <StepLabel {...labelProps}>{label}</StepLabel>
+                                    <StepLabel {...labelProps} className="circle-parent">{null}</StepLabel>
                                 </Step>
                             );
                         })}
@@ -176,9 +179,9 @@ const RequisitosCurso = () => {
                                                 label="Tipo de pagamento"
                                                 onChange={handleChangeTypePayment}
                                             >
-                                                <MenuItem value={10}>Ten</MenuItem>
-                                                <MenuItem value={20}>Twenty</MenuItem>
-                                                <MenuItem value={30}>Thirty</MenuItem>
+                                                {
+                                                    paymentTypeList.map((paymentType) => (<MenuItem value={paymentType} key={uuid()}>{paymentType}</MenuItem>))
+                                                }
                                             </Select>
                                         </FormControl>
                                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap }}>
@@ -191,12 +194,14 @@ const RequisitosCurso = () => {
                                                     label="Quantia a pagar"
                                                     onChange={handleChangeCountToPay}
                                                 >
-                                                    <MenuItem value={10}>Ten</MenuItem>
-                                                    <MenuItem value={20}>Twenty</MenuItem>
-                                                    <MenuItem value={30}>Thirty</MenuItem>
+                                                    {
+                                                        quantiaAPagar.map((quantia) => (<MenuItem value={quantia} key={uuid()}>{quantia}</MenuItem>))
+                                                    }
                                                 </Select>
                                             </FormControl>
-                                            <Typography variant="h6" style={{ color: 'var(--black)', fontSize: '0.925rem', display: 'flex' }}>Valor mínimo a pagar: <Typography variant="h6" style={{ color: 'var(--primary)', fontSize: '0.925rem' }}> {formatDigits(valorMinimo)}kzs</Typography></Typography>
+                                            <Typography variant="h6" style={{ color: 'var(--black)', fontSize: '0.925rem', display: 'flex' }}>
+                                                Valor mínimo a pagar: <Typography variant="caption" style={{ color: 'var(--primary)', fontSize: '0.925rem' }}> {formatDigits(valorMinimo)}kzs</Typography>
+                                            </Typography>
                                         </Box>
                                     </Box>
                                     {/*  */}
