@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
@@ -15,7 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { v4 as uuid } from "uuid";
-import { Link } from "@mui/material";
+import { Button, Link, Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const steps = ["Pagamento", "Criar conta", "Aderir"];
 
@@ -109,7 +109,7 @@ const RequisitosCurso = () => {
    */
   const ButtonBaseProgress = () => {
     return (
-      <Box sx={{ display: "flex", mt: "35px", gap }}>
+      <Box sx={{ display: "flex", mt: "20px", gap }}>
         <Button
           disabled={activeStep === 0}
           onClick={handleBack}
@@ -218,6 +218,26 @@ const RequisitosCurso = () => {
           </Box>
         );
       case 1:
+        const VisuallyHiddenInput = styled("input")({
+          clip: "rect(0 0 0 0)",
+          clipPath: "inset(50%)",
+          height: 1,
+          overflow: "hidden",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          whiteSpace: "nowrap",
+          width: 1,
+        });
+        const ButtonUploadFile = styled(Button)({
+          width: "clamp(320px, 65%, 373px)",
+          textTransform: "none",
+          backgroundColor: "rgba(71, 132, 254, 0.2)",
+          color: "rgba(51, 51, 51, 0.5)",
+          padding: "0.8rem 2rem",
+          boxShadow: "none",
+        });
+
         return (
           <Box
             sx={{
@@ -307,6 +327,17 @@ const RequisitosCurso = () => {
                   Ajuda
                 </Link>
               </Box>
+            </Box>
+            <Box sx={{ py: 0.5 }}>
+              <ButtonUploadFile
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+              >
+                Carregar comprovativo de pagamento
+                <VisuallyHiddenInput type="file" />
+              </ButtonUploadFile>
             </Box>
           </Box>
         );
