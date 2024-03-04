@@ -236,6 +236,10 @@ const RequisitosCurso = () => {
           color: "rgba(51, 51, 51, 0.5)",
           padding: "0.8rem 2rem",
           boxShadow: "none",
+          '&:hover': {
+            backgroundColor: 'rgba(71, 132, 254, 0.2)',
+            boxShadow: '0 0 7px 1px rgba(51, 51, 51, 0.05)'
+          }
         });
 
         return (
