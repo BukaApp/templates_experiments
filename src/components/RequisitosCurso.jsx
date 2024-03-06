@@ -16,6 +16,8 @@ import Select from "@mui/material/Select";
 import { v4 as uuid } from "uuid";
 import { Button, Link, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import pathImageUploadFile from "../assets/Group_80.jpg";
+import pathImageSuccessPayment from "../assets/Group_169.jpg";
 
 const steps = ["Pagamento", "Criar conta", "Aderir"];
 
@@ -137,13 +139,23 @@ const RequisitosCurso = () => {
    * @returns JSX.Element
    */
   const ListComponent = ({ step }) => {
+    const VisuallyHiddenInput = styled("input")({
+      clip: "rect(0 0 0 0)",
+      clipPath: "inset(50%)",
+      height: 1,
+      overflow: "hidden",
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      whiteSpace: "nowrap",
+      width: 1,
+    });
+
     switch (step) {
       case 0:
         return (
           <Box
             sx={{
-              width: 500,
-              maxWidth: "100%",
               display: "grid",
               gridAutoFlow: "row",
               gap,
@@ -218,35 +230,22 @@ const RequisitosCurso = () => {
           </Box>
         );
       case 1:
-        const VisuallyHiddenInput = styled("input")({
-          clip: "rect(0 0 0 0)",
-          clipPath: "inset(50%)",
-          height: 1,
-          overflow: "hidden",
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          whiteSpace: "nowrap",
-          width: 1,
-        });
         const ButtonUploadFile = styled(Button)({
-          width: "clamp(320px, 65%, 373px)",
+          width: "67%",
           textTransform: "none",
           backgroundColor: "rgba(71, 132, 254, 0.2)",
           color: "rgba(51, 51, 51, 0.5)",
           padding: "0.8rem 2rem",
           boxShadow: "none",
-          '&:hover': {
-            backgroundColor: 'rgba(71, 132, 254, 0.2)',
-            boxShadow: '0 0 7px 1px rgba(51, 51, 51, 0.05)'
-          }
+          "&:hover": {
+            backgroundColor: "rgba(71, 132, 254, 0.2)",
+            boxShadow: "0 0 7px 1px rgba(51, 51, 51, 0.05)",
+          },
         });
 
         return (
           <Box
             sx={{
-              width: 500,
-              maxWidth: "100%",
               display: "grid",
               gridAutoFlow: "row",
               gap,
@@ -338,6 +337,9 @@ const RequisitosCurso = () => {
                 role={undefined}
                 variant="contained"
                 tabIndex={-1}
+                sx={{
+                  width: "clamp()",
+                }}
               >
                 Carregar comprovativo de pagamento
                 <VisuallyHiddenInput type="file" />
@@ -345,113 +347,251 @@ const RequisitosCurso = () => {
             </Box>
           </Box>
         );
+      case 2:
+        const Image = styled("img")({
+          width: "130px",
+          minWidth: 0,
+          minHeight: 0,
+          height: "80px",
+          objectFit: "cover",
+        });
+
+        return (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "1px solid var(--background-low)",
+              borderRadius: "var(--border-radius)",
+              margin: "auto",
+              width: "clamp(195px, 50%, 65%)",
+              padding: "2.5rem 0",
+              gap: "15px",
+            }}
+          >
+            <Image
+              src={pathImageUploadFile}
+              alt="Imagem de upload de comprovativo"
+            />
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              sx={{
+                backgroundColor: "var(--black)",
+                color: "var(--White)",
+                width: "130px",
+                fontSize: "0.750rem",
+                textTransform: "none",
+                "&:hover": {
+                  backgroundColor: "var(--black)",
+                },
+              }}
+            >
+              Escolher ficheiro
+              <VisuallyHiddenInput type="file" />
+            </Button>
+          </Box>
+        );
       default:
-        break;
+        return <React.Fragment></React.Fragment>;
     }
+  };
+
+  const Image = styled("img")({
+    minHeight: 0,
+    minWidth: 0,
+    width: "110px",
+    height: "110px",
+  });
+  const flex = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
   return (
     <div className="container-requisitoscurso flex">
-      <div className="container-literal-painel-requisitoscurso">
-        <div className="container-logo-requisitoscurso flex">
-          <LogoMaiorWhiteComponent size={90} />
-        </div>
-        <div className="container-image-requisitoscurso flex">
-          <div className="subcontainer-maskgroup flex">
-            <img
-              src={maskgroup}
-              alt="Imagem"
-              className="image-maskgroup-requistoscurso"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="container-form-payment">
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            gap: 0,
-          }}
-        >
-          <Stepper activeStep={activeStep} sx={{ px: padding, mt: padding }}>
-            {steps.map((label, index) => {
-              const stepProps = {};
-              const labelProps = {};
-
-              // if (isStepOptional(index)) {
-              //     labelProps.optional = (
-              //         <Typography variant="caption">Optional</Typography>
-              //     );
-              // }
-
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps} className="circle-parent">
-                    {null}
-                  </StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-          {activeStep === steps.length && (
-            <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleReset}>Reset</Button>
-              </Box>
-            </React.Fragment>
-          )}
-          {activeStep !== steps.length && (
-            <React.Fragment>
+      {activeStep === steps.length ? (
+        <React.Fragment>
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "var(--White)",
+              ...flex,
+              flexDirection: "column",
+            }}
+          >
+            <Box
+              sx={{
+                ...flex,
+                flexDirection: "column",
+                gap: "13px",
+              }}
+            >
+              <Image src={pathImageSuccessPayment} alt="Icon de sucesso" />
               <Box
                 sx={{
-                  display: "flex",
+                  ...flex,
                   flexDirection: "column",
-                  padding,
-                  gap: "2.5rem",
                 }}
               >
-                {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-                <Box>
-                  <Typography
-                    sx={{ color: "var(--primary)", fontWeight: "600" }}
-                    variant="h5"
-                  >
-                    Pagamentos
-                  </Typography>
-                  <Typography
-                    variant="body2"
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: "1.7rem",
+                    fontWeight: "900",
+                  }}
+                >
+                  Pagamento submetido com sucesso!
+                </Typography>
+                <Typography
+                  variant="h2"
+                  sx={{
+                    fontSize: "0.8rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  Aguarde até 72h pela verificação e confirmação do seu
+                  pagamento.
+                </Typography>
+              </Box>
+            </Box>
+            <Box sx={{ ...flex, pt: 2 }}>
+              <Button
+                onClick={handleReset}
+                sx={{
+                  backgroundColor: "var(--primary)",
+                  textTransform: "none",
+                  color: "var(--White)",
+                  py: "0.5rem",
+                  px: "2rem",
+                  fontVariant: "all-small-caps",
+                  "&:hover": {
+                    color: "var(--primary)",
+                  },
+                }}
+              >
+                Ir para Dashboard
+              </Button>
+            </Box>
+          </Box>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <div className="container-literal-painel-requisitoscurso">
+            <div className="container-logo-requisitoscurso flex">
+              <LogoMaiorWhiteComponent size={90} />
+            </div>
+            <div className="container-image-requisitoscurso flex">
+              <div className="subcontainer-maskgroup flex">
+                <img
+                  src={maskgroup}
+                  alt="Imagem"
+                  className="image-maskgroup-requistoscurso"
+                />
+                <Button
+                  variant="contained"
+                  sx={{
+                    ...flex,
+                    content: "none",
+                    position: "absolute",
+                    width: "60px",
+                    height: "60px",
+                    borderRadius: "50px",
+                    top: "165px",
+                    left: "15px",
+                  }}
+                >
+                  {/* aqui deve vir un icon */}
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="container-form-payment">
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                gap: 0,
+              }}
+            >
+              <Stepper
+                activeStep={activeStep}
+                sx={{ px: padding, mt: padding }}
+              >
+                {steps.map((label, index) => {
+                  const stepProps = {};
+                  const labelProps = {};
+
+                  // if (isStepOptional(index)) {
+                  //     labelProps.optional = (
+                  //         <Typography variant="caption">Optional</Typography>
+                  //     );
+                  // }
+
+                  if (isStepSkipped(index)) {
+                    stepProps.completed = false;
+                  }
+                  return (
+                    <Step key={label} {...stepProps}>
+                      <StepLabel {...labelProps} className="circle-parent">
+                        {null}
+                      </StepLabel>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+              {activeStep !== steps.length && (
+                <React.Fragment>
+                  <Box
                     sx={{
-                      width: "calc(100% - 125px)",
-                      m: "auto",
-                      color: "var(--black)",
-                      fontSize: "0.725rem",
+                      display: "flex",
+                      flexDirection: "column",
+                      padding,
+                      gap: "2.5rem",
                     }}
                   >
-                    Para poder participar da formação efectue o pagamento e
-                    assim confirme a sua presença nesta turma.
-                  </Typography>
-                </Box>
-                <Box>
-                  <ListComponent step={activeStep} />
-                  {/*  */}
-                  <ButtonBaseProgress />
-                </Box>
-              </Box>
-            </React.Fragment>
-          )}
-        </Box>
-      </div>
+                    {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
+                    <Box>
+                      <Typography
+                        sx={{ color: "var(--primary)", fontWeight: "600" }}
+                        variant="h5"
+                      >
+                        Pagamentos
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          width: "calc(100% - 125px)",
+                          m: "auto",
+                          color: "var(--black)",
+                          fontSize: "0.725rem",
+                        }}
+                      >
+                        Para poder participar da formação efectue o pagamento e
+                        assim confirme a sua presença nesta turma.
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <ListComponent step={activeStep} />
+                      {/*  */}
+                      <ButtonBaseProgress />
+                    </Box>
+                  </Box>
+                </React.Fragment>
+              )}
+            </Box>
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 };
