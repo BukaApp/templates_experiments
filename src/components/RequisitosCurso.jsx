@@ -22,7 +22,21 @@ import pathImageSuccessPayment from "../assets/Group_169.jpg";
 const steps = ["Pagamento", "Criar conta", "Aderir"];
 
 const RequisitosCurso = () => {
-  const paymentTypeList = ["A ordem", "corrente", "global"];
+  const paymentTypeList = [
+    {
+      type: "prestacao",
+      name: "Prestação",
+    },
+    {
+      type: "completo",
+      name: "Completo",
+    },
+  ];
+  const flex = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
   const quantiaAPagar = ["15000", "30000", "25000"];
   const valorMinimo = 15000;
   const gap = 1.5;
@@ -135,7 +149,7 @@ const RequisitosCurso = () => {
 
   /**
    *
-   * @param {number} step
+   * @param {number | string} step
    * @returns JSX.Element
    */
   const ListComponent = ({ step }) => {
@@ -174,8 +188,8 @@ const RequisitosCurso = () => {
                 onChange={handleChangeTypePayment}
               >
                 {paymentTypeList.map((paymentType) => (
-                  <MenuItem value={paymentType} key={uuid()}>
-                    {paymentType}
+                  <MenuItem value={paymentType.type} key={uuid()}>
+                    {paymentType.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -396,6 +410,87 @@ const RequisitosCurso = () => {
             </Button>
           </Box>
         );
+      case "prestacao":
+        const InfoContainer = styled(Box)({});
+        const sxDescribe = {
+          fontSize: "0.875rem",
+          fontWeight: "650",
+          color: "var(--primary)",
+        };
+        const sxHeader = {
+          ...sxDescribe,
+          fontSize: "1rem",
+          color: "var(--secondary)",
+        };
+
+        const [prevision, setProvision] = React.useState("1 prestação");
+
+        const handleChange = (event) => {
+          setProvision(event.target.value);
+        };
+
+        return (
+          <InfoContainer>
+            <Box sx={{ ...flex, flexDirection: "column", gap: "7px" }}>
+              <Box {...flex} gap="10px">
+                <Typography variant="h3" sx={sxHeader}>
+                  Curso:
+                </Typography>
+                <Typography
+                  variant="h3"
+                  sx={{ ...sxHeader, color: "var(--primary)" }}
+                >
+                  Unitel code web
+                </Typography>
+              </Box>
+              <Box {...flex} gap="10px">
+                <Typography
+                  variant="h3"
+                  sx={{ ...sxDescribe, color: "#213547" }}
+                >
+                  Preço:
+                </Typography>
+                <Typography variant="h3" sx={sxDescribe}>
+                  {formatDigits(30000)} kz
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{ ...flex, flexDirection: "column", gap: "7px", mt: "20px" }}
+            >
+              <Typography
+                variant="inherit"
+                sx={{ fontSize: "0.656rem", fontWeight: "650", color: "#333" }}
+              >
+                Escolha até em quantas prestações deseja pagar e o tipo de
+                pagamento
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                ...flex,
+                flexDirection: "column",
+                gap: "7px",
+                mt: "35px",
+              }}
+            >
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Prestação</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={prevision}
+                  label="Prestação"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"1 prestação"}>1 prestação</MenuItem>
+                  <MenuItem value={"2 prestações"}>2 prestações</MenuItem>
+                  <MenuItem value={"3 prestações"}>3 prestações</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </InfoContainer>
+        );
       default:
         return <React.Fragment></React.Fragment>;
     }
@@ -407,11 +502,6 @@ const RequisitosCurso = () => {
     width: "110px",
     height: "110px",
   });
-  const flex = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
 
   return (
     <div className="container-requisitoscurso flex">
@@ -556,7 +646,7 @@ const RequisitosCurso = () => {
                       display: "flex",
                       flexDirection: "column",
                       padding,
-                      gap: "2.5rem",
+                      gap: "1.5rem",
                     }}
                   >
                     {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
@@ -565,23 +655,32 @@ const RequisitosCurso = () => {
                         sx={{ color: "var(--primary)", fontWeight: "600" }}
                         variant="h5"
                       >
-                        Pagamentos
+                        {typePayment !== "prestacao"
+                          ? "Pagamentos"
+                          : "Informações de pagamento"}
                       </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          width: "calc(100% - 125px)",
-                          m: "auto",
-                          color: "var(--black)",
-                          fontSize: "0.725rem",
-                        }}
-                      >
-                        Para poder participar da formação efectue o pagamento e
-                        assim confirme a sua presença nesta turma.
-                      </Typography>
+                      {typePayment !== "prestacao" && (
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            width: "calc(100% - 125px)",
+                            m: "auto",
+                            color: "var(--black)",
+                            fontSize: "0.725rem",
+                          }}
+                        >
+                          Para poder participar da formação efectue o pagamento
+                          e assim confirme a sua presença nesta turma.
+                        </Typography>
+                      )}
                     </Box>
                     <Box>
-                      <ListComponent step={activeStep} />
+                      {typePayment !== "prestacao" && (
+                        <ListComponent step={activeStep} />
+                      )}
+                      {typePayment === "prestacao" && (
+                        <ListComponent step="prestacao" />
+                      )}
                       {/*  */}
                       <ButtonBaseProgress />
                     </Box>
